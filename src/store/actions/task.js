@@ -11,3 +11,34 @@ export const fetchOwnedTasks = () => (dispatch) => {
         });
     })
 };
+
+export const toggleHidden = (taskId) => (dispatch) => {
+    axios.put('/tasks/toggle/hidden/' + taskId, {} , {headers: authHeader() })
+    .then((response) => {
+        dispatch({
+            type: actionTypes.TOGGLE_HIDDEN,
+            taskId: taskId,
+            task: response.data
+        });
+    })
+};
+
+export const deleteTask = (taskId) => (dispatch) => {
+    axios.delete('/tasks/' + taskId, {headers: authHeader() })
+    .then((response) => {
+        dispatch({
+            type: actionTypes.DELETE_TASK,
+            taskId: taskId
+        });
+    })
+};
+
+export const createTask = (task) => (dispatch) => {
+    axios.post('/tasks', task, {headers: authHeader() })
+    .then((response) => {
+        dispatch({
+            type: actionTypes.CREATE_TASK,
+            newTask: response.data
+        });
+    })
+};

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchOwnedTasks } from "../../store/actions/task";
+import { fetchOwnedTasks, toggleHidden } from "../../store/actions/task";
 import Container from "@mui/material/Container";
 import {
   CssBaseline,
@@ -26,6 +26,10 @@ function OwnTasks(props) {
 
     setLoading(false);
   }, []);
+
+  function toggleHandler(id) {
+    props.toggleHidden(id);
+  }
 
   const theme = createTheme();
   let tasks = <p>Loading...</p>;
@@ -88,7 +92,7 @@ function OwnTasks(props) {
             <Button>Edytuj</Button>
             <Button sx={{ color: "#d50000" }}>Usuń</Button>
             <FormControlLabel
-              control={<Switch checked={!task.hidden} />}
+              control={<Switch checked={!task.hidden} onChange={() => toggleHandler(task.id)} />}
               label={task.hidden ? "Obecnie ukryty" : "Obecnie widoczny"}
             />
           </CardActions>
@@ -110,6 +114,7 @@ function OwnTasks(props) {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchOwnedTasks: () => dispatch(fetchOwnedTasks()),
+    toggleHidden: (id) => dispatch(toggleHidden(id)),
   };
 };
 
