@@ -11,3 +11,74 @@ export const fetchOwnedTasks = () => (dispatch) => {
         });
     })
 };
+
+export const fetchDrawnTasks = () => (dispatch) => {
+    axios.get('/tasks/drawn/unfinished', {headers: authHeader() })
+    .then((response) => {
+        dispatch({
+            type: actionTypes.FETCH_DRAWN_TASKS,
+            tasks: response.data
+        });
+    })
+};
+
+export const fetchFinishedTasks = () => (dispatch) => {
+    axios.get('/tasks/finished', {headers: authHeader() })
+    .then((response) => {
+        dispatch({
+            type: actionTypes.FETCH_FINISHED_TASKS,
+            tasks: response.data
+        });
+    })
+};
+
+export const toggleHidden = (taskId) => (dispatch) => {
+    axios.put('/tasks/toggle/hidden/' + taskId, {} , {headers: authHeader() })
+    .then((response) => {
+        dispatch({
+            type: actionTypes.TOGGLE_HIDDEN,
+            taskId: taskId,
+            task: response.data
+        });
+    })
+};
+
+export const deleteTask = (taskId) => (dispatch) => {
+    axios.delete('/tasks/' + taskId, {headers: authHeader() })
+    .then((response) => {
+        dispatch({
+            type: actionTypes.DELETE_TASK,
+            taskId: taskId
+        });
+    })
+};
+
+export const createTask = (task) => (dispatch) => {
+    axios.post('/tasks', task, {headers: authHeader() })
+    .then((response) => {
+        dispatch({
+            type: actionTypes.CREATE_TASK,
+            newTask: response.data
+        });
+    })
+};
+
+export const drawTask = () => (dispatch) => {
+    axios.post('/tasks/draw', {}, {headers: authHeader() })
+    .then((response) => {
+        dispatch({
+            type: actionTypes.DRAW_TASK,
+            drawnTask: response.data
+        });
+    })
+};
+
+export const finishTask = (taskId) => (dispatch) => {
+    axios.post('/tasks/finish/' + taskId, {}, {headers: authHeader() })
+    .then((response) => {
+        dispatch({
+            type: actionTypes.FINISH_TASK,
+            finishedTask: response.data
+        });
+    })
+};
