@@ -12,17 +12,16 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { connect } from "react-redux";
+import { login} from "../../store/actions/auth";
 
 const theme = createTheme();
 
-export default function SignIn() {
+function Login(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    props.login(data.get('name'), data.get('password'));
   };
 
   return (
@@ -48,10 +47,10 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email"
-              name="email"
-              autoComplete="email"
+              id="name"
+              label="Nazwa"
+              name="name"
+              autoComplete="name"
               autoFocus
             />
             <TextField
@@ -89,3 +88,11 @@ export default function SignIn() {
     </ThemeProvider>
   );
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (username, password) => dispatch(login(username, password)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Login);

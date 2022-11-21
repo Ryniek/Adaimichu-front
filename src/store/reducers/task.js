@@ -34,6 +34,16 @@ const reducer = (state = initialState, action) => {
         ...state,
         tasks: action.tasks,
       };
+    case actionTypes.FETCH_DRAWN_TASKS:
+      return {
+        ...state,
+        tasks: action.tasks,
+      };
+    case actionTypes.FETCH_FINISHED_TASKS:
+      return {
+        ...state,
+        tasks: action.tasks,
+      };
     case actionTypes.TOGGLE_HIDDEN:
       return {
         ...state,
@@ -52,6 +62,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         tasks: state.tasks.concat(action.newTask),
       };
+      case actionTypes.DRAW_TASK:
+        return {
+          ...state,
+          tasks: state.tasks.concat(action.drawnTask),
+        };
     default:
       return state;
   }

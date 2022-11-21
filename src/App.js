@@ -1,13 +1,13 @@
 import "./App.css";
-import Login from './components/login/Login';
-import OwnTasks from './components/tasks/OwnTasks';
+import TopNav from "./components/navigation/TopNav";
+import OwnTasks from "./components/tasks/OwnTasks";
 
 function App() {
   return (
-    <div>
-      <Login></Login>
+    <>
+      <TopNav></TopNav>
       <OwnTasks></OwnTasks>
-    </div>
+    </>
   );
 }
 
