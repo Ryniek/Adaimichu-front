@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,17 +12,24 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { login} from "../../store/actions/auth";
+import { useNavigate, Navigate } from 'react-router-dom';
 
 const theme = createTheme();
 
 function Login(props) {
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     props.login(data.get('name'), data.get('password'));
   };
+
+  if (props.auth.isLoggedIn) {
+    return <Navigate to="/owned" />;
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -91,8 +98,14 @@ function Login(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    login: (username, password) => dispatch(login(username, password)),
+      login: (user, password) => dispatch(login(user, password)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
