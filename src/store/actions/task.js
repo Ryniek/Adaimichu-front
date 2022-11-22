@@ -78,7 +78,7 @@ export const finishTask = (taskId) => (dispatch) => {
     .then((response) => {
         dispatch({
             type: actionTypes.FINISH_TASK,
-            finishedTask: response.data
+            taskId: taskId
         });
     })
 };

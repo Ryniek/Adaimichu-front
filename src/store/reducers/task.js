@@ -67,6 +67,12 @@ const reducer = (state = initialState, action) => {
           ...state,
           tasks: state.tasks.concat(action.drawnTask),
         };
+        case actionTypes.FINISH_TASK:
+          const afterFinishTasks = state.tasks.filter((task) => task.id !== action.taskId);
+          return {
+            ...state,
+            tasks: afterFinishTasks,
+          };
     default:
       return state;
   }
