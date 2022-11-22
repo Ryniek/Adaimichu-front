@@ -1,9 +1,13 @@
 import React from "react";
 import { Tabs, Tab, Grid, Typography, Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import {logout} from '../../store/actions/auth';
+import { logout } from "../../store/actions/auth";
 import { connect } from "react-redux";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 
 function TopNav(props) {
   const [value, setValue] = React.useState("one");
@@ -15,8 +19,8 @@ function TopNav(props) {
 
   const logoutHandler = () => {
     props.logout();
-    navigate('/');
-  }
+    navigate("/");
+  };
 
   return (
     <Grid
@@ -26,7 +30,7 @@ function TopNav(props) {
       justify="center"
       style={{ minHeight: "8vh" }}
     >
-      <Grid item xs={8}  align="flex-start">
+      <Grid item xs={12} sm={8} align={{xs:"center", sm:"flex-start"}}>
         <Box
           component="img"
           sx={{
@@ -39,23 +43,60 @@ function TopNav(props) {
           src={"./ada-i-michu-logo.png"}
         />
       </Grid>
-      <Grid item xs={4} align="center">
-        <Typography onClick={() => logoutHandler()}>LOGOUT</Typography>
+      <Grid item xs={12} sm={4} align="center">
+        {props.auth.isLoggedIn ? (
+          <PopupState variant="popover" popupId="demo-popup-menu">
+            {(popupState) => (
+              <React.Fragment>
+                <Button size="large" variant="contained" {...bindTrigger(popupState)}>
+                  Ustawienia
+                </Button>
+                <Menu {...bindMenu(popupState)}>
+                  <MenuItem onClick={popupState.close}>Profil</MenuItem>
+                  <MenuItem onClick={() => logoutHandler()}>Wyloguj</MenuItem>
+                </Menu>
+              </React.Fragment>
+            )}
+          </PopupState>
+        ) : null}
       </Grid>
-      {props.auth.isLoggedIn ? <Grid item xs={12} align="center">
-        <Tabs
-          centered
-          value={value}
-          onChange={handleChange}
-          textColor="secondary"
-          indicatorColor="secondary"
-          aria-label="secondary tabs example"
-        >
-          <Tab value="one" label="Własne zadania" component={Link} to="/owned" />
-          <Tab value="two" label="Wylosowane zadania" component={Link} to="/drawn" />
-          <Tab value="three" label="Zakończone zadania" component={Link} to="/finished" />
-        </Tabs>
-      </Grid> : null}
+
+      {props.auth.isLoggedIn ? (
+        <Grid item xs={12} align="center">
+          <Tabs
+            sx={{
+              "& .MuiTabs-flexContainer": {
+                flexWrap: "wrap",
+              },
+            }}
+            centered
+            value={value}
+            onChange={handleChange}
+            textColor="secondary"
+            indicatorColor="secondary"
+            aria-label="secondary tabs example"
+          >
+            <Tab
+              value="one"
+              label="Własne zadania"
+              component={Link}
+              to="/owned"
+            />
+            <Tab
+              value="two"
+              label="Wylosowane zadania"
+              component={Link}
+              to="/drawn"
+            />
+            <Tab
+              value="three"
+              label="Zakończone zadania"
+              component={Link}
+              to="/finished"
+            />
+          </Tabs>
+        </Grid>
+      ) : null}
     </Grid>
   );
 }
