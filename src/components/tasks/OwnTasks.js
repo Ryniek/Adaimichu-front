@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchOwnedTasks, toggleHidden } from "../../store/actions/task";
+import { fetchOwnedTasks, toggleHidden, deleteTask } from "../../store/actions/task";
 import Container from "@mui/material/Container";
 import {
   CssBaseline,
@@ -18,9 +18,11 @@ import {
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import dateFormatter from "../../features/converters/dateConverter";
 import FlagIcon from "@mui/icons-material/Flag";
+import { ConfirmDialog } from "primereact/confirmdialog";
 
 function OwnTasks(props) {
   const [loading, setLoading] = useState(true);
+  const [taskToDelete, setTaskToDelete] = useState(false);
 
   useEffect(() => {
     props.fetchOwnedTasks();
@@ -30,6 +32,10 @@ function OwnTasks(props) {
 
   function toggleHandler(id) {
     props.toggleHidden(id);
+  }
+
+  function deleteTask() {
+    props.deleteTask(taskToDelete);
   }
 
   const theme = createTheme();
@@ -101,7 +107,17 @@ function OwnTasks(props) {
         {!task.started && !task.finished ? (
           <CardActions>
             <Button>Edytuj</Button>
-            <Button sx={{ color: "#d50000" }}>Usuń</Button>
+            <Button onClick={() => setTaskToDelete(task.id)} sx={{ color: "#d50000" }}>Usuń</Button>
+            <ConfirmDialog
+                visible={taskToDelete}
+                onHide={() => setTaskToDelete(false)}
+                message="Czy na pewno chcesz usunąć zadanie?"
+                header="Potwierdzenie"
+                icon="pi pi-exclamation-circle"
+                acceptLabel="Tak"
+                rejectLabel="Nie"
+                accept={() => deleteTask()}
+              />
             <FormControlLabel
               control={<Switch checked={!task.hidden} onChange={() => toggleHandler(task.id)} />}
               label={task.hidden ? "Obecnie ukryty" : "Obecnie widoczny"}
@@ -126,6 +142,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchOwnedTasks: () => dispatch(fetchOwnedTasks()),
     toggleHidden: (id) => dispatch(toggleHidden(id)),
+    deleteTask: (id) => dispatch(deleteTask(id)),
   };
 };
 
