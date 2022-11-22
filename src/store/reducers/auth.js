@@ -12,7 +12,7 @@ const initialState = user
             return {
                 ...state,
                 isLoggedIn: true,
-                user: action.payload.user
+                user: action.user
             };
         case actionTypes.LOGIN_FAIL:
             return {

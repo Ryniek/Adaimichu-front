@@ -1,16 +1,19 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-instance';
 
+
 export const login = (name, password) => (dispatch) => {
     axios.post('/auth/login', {name, password})
             .then((response) => {
                 if (response.data) {
                     localStorage.setItem('user', JSON.stringify(response.data));
                 }
-                return dispatch({
+                dispatch({
                     type: actionTypes.LOGIN_SUCCESS,
-                    payload: { user: response.data }
+                    user: response.data,
                 });
+
+                return Promise.resolve();
             })
             .catch((error) => {
                 return dispatch({

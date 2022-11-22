@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
 import Login from "./components/login/Login";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,37 +11,30 @@ import "@fontsource/roboto/700.css";
 import store from "./store/store";
 import { Provider } from "react-redux";
 import {
-  createBrowserRouter,
-  RouterProvider,
   Route,
+  BrowserRouter,
+  Routes,
 } from "react-router-dom";
 import DrawnTasks from "./components/tasks/DrawnTasks";
 import FinishedTasks from "./components/tasks/FinishedTasks";
+import OwnTasks from "./components/tasks/OwnTasks";
+import TopNav from "./components/navigation/TopNav";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/drawn",
-    element: <DrawnTasks />,
-  },
-  {
-    path: "/finished",
-    element: <FinishedTasks />,
-  },
-]);
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <React.StrictMode>
-    <RouterProvider router={router} />
+      <BrowserRouter>
+        <TopNav></TopNav>
+        <Routes>
+          <Route path="/" element={<Login />}></Route>
+          <Route path="/owned" element={<OwnTasks />}></Route>
+          <Route path="/drawn" element={<DrawnTasks />}></Route>
+          <Route path="/finished" element={<FinishedTasks />}></Route>
+        </Routes>
+      </BrowserRouter>
     </React.StrictMode>
   </Provider>
 );

@@ -12,6 +12,7 @@ import {
   Button,
   FormControlLabel,
   Switch,
+  Grid,
   Box,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -49,43 +50,53 @@ function OwnTasks(props) {
               <b>Zakończone</b>
             </Typography>
           ) : null}
-          <Typography sx={{ fontSize: 18 }}>
+          <Typography sx={{ fontSize: 20 }}>
             <b>Nazwa:</b> {task.name}
           </Typography>
-          <Typography sx={{ fontSize: 18 }}>
+          <Typography sx={{ fontSize: 20 }}>
             {task.comment ? (
               <>
                 <b>Komentarz:</b> {task.comment}
               </>
             ) : null}
           </Typography>
-          <Box display="flex">
-            <Typography sx={{ fontSize: 16, padding: 1 }}>
-              <b>Data utworzenia:</b> {dateFormatter(task.creationDate)}
-            </Typography>
-            <Typography sx={{ fontSize: 16, padding: 1 }}>
-              <b>Dni do wykorzystania:</b> {task.daysToUse}
-            </Typography>
-          </Box>
-          <Box display="flex">
-            {task.expirationDate ? (
-              <Typography sx={{ fontSize: 16, padding: 1 }}>
-                <b>Data wygaśnięcia:</b> {dateFormatter(task.expirationDate)}
+          <Grid container justify="center" sx={{ ml: {sm: 3} }} spacing={2}>
+            <Grid item lg={3} sm={12} md={6} xs={12}>
+              <Typography sx={{ fontSize: 16 }}>
+                <b>Data utworzenia:</b> {dateFormatter(task.creationDate)}
               </Typography>
-            ) : null}
-            {task.finishDate ? (
-              <Typography sx={{ fontSize: 16, padding: 1 }}>
-                <b>Data zakończenia:</b> {dateFormatter(task.finishDate)}
+            </Grid>
+            <Grid item lg={3} sm={12} md={6} xs={12}>
+            <Typography sx={{ fontSize: 16 }}>
+                <b>Dni do wykorzystania:</b> {task.daysToUse}
               </Typography>
-            ) : null}
-          </Box>
-          {task.drawnUser ? (
-            <Box display="flex">
-              <Typography sx={{ fontSize: 16, padding: 1 }}>
-                <b>Wylosowana przez:</b> {task.drawnUser.name}
-              </Typography>
-            </Box>
-          ) : null}
+            </Grid>
+          </Grid>
+          <Grid container justify="center" sx={{ ml: {sm: 3} }} spacing={2}>
+            <Grid item lg={3} sm={12} md={6} xs={12}>
+              {task.expirationDate ? (
+                <Typography sx={{ fontSize: 16 }}>
+                  <b>Data wygaśnięcia:</b> {dateFormatter(task.expirationDate)}
+                </Typography>
+              ) : null}
+            </Grid>
+            <Grid item lg={3} sm={12} md={6} xs={12}>
+              {task.finishDate ? (
+                <Typography sx={{ fontSize: 16 }}>
+                  <b>Data zakończenia:</b> {dateFormatter(task.finishDate)}
+                </Typography>
+              ) : null}
+            </Grid>
+          </Grid>
+          <Grid container justify="center" sx={{ ml: {sm: 3} }} spacing={2}>
+            <Grid item lg={3} sm={12} md={6} xs={12}>
+              {task.drawnUser ? (
+                <Typography sx={{ fontSize: 16, color:"DarkGreen" }}>
+                  <b>Wylosowana przez:</b> {task.drawnUser.name}
+                </Typography>
+              ) : null}
+            </Grid>
+          </Grid>
         </CardContent>
         {!task.started && !task.finished ? (
           <CardActions>
