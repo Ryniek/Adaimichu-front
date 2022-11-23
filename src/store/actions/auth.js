@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-instance';
-
+import authHeader from '../../services/auth-header';
 
 export const login = (name, password) => (dispatch) => {
     axios.post('/auth/login', {name, password})
@@ -28,4 +28,14 @@ export const logout = () => (dispatch) => {
     dispatch({
         type: actionTypes.LOGOUT,
     });
+};
+
+export const setPassword = (passwords) => (dispatch) => {
+    axios.put('/users/password', passwords , {headers: authHeader() })
+    .then((response) => {
+        localStorage.removeItem('user');
+        dispatch({
+            type: actionTypes.SET_PASSWORD,
+        });
+    })
 };

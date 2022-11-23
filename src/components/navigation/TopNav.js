@@ -22,6 +22,10 @@ function TopNav(props) {
     navigate("/");
   };
 
+  const profileNavigateHandler = () => {
+    navigate("/profile")
+  }
+
   return (
     <Grid
       container
@@ -54,7 +58,7 @@ function TopNav(props) {
                   Ustawienia
                 </Button>
                 <Menu {...bindMenu(popupState)}>
-                  <MenuItem onClick={popupState.close}>Profil</MenuItem>
+                  <MenuItem onClick={() => profileNavigateHandler()}>Profil</MenuItem>
                   <MenuItem onClick={() => logoutHandler()}>Wyloguj</MenuItem>
                 </Menu>
               </React.Fragment>

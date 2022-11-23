@@ -22,8 +22,7 @@ import DrawnTasks from "./components/tasks/DrawnTasks";
 import FinishedTasks from "./components/tasks/FinishedTasks";
 import OwnTasks from "./components/tasks/OwnTasks";
 import TopNav from "./components/navigation/TopNav";
-
-
+import EditProfile from "./components/profile/EditProfile";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -36,6 +35,7 @@ root.render(
           <Route path="/owned" element={<OwnTasks />}></Route>
           <Route path="/drawn" element={<DrawnTasks />}></Route>
           <Route path="/finished" element={<FinishedTasks />}></Route>
+          <Route path="/profile" element={<EditProfile />}></Route>
         </Routes>
       </BrowserRouter>
     </React.StrictMode>
