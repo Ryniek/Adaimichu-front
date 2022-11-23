@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import { Box, TextField } from "@mui/material";
 import { setEmail, fetchUserDetails } from "../../store/actions/user";
 import { setPassword } from "../../store/actions/auth";
 import { CssBaseline, Container } from "@mui/material";
 import { ConfirmDialog } from "primereact/confirmdialog";
+import { Navigate } from 'react-router-dom';
 
 function EditProfile(props) {
   const [email, setEmail] = useState(props.user.email);
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [newPasswordAgain, setNewPasswordAgain] = useState("");
   const [visible, setVisible] = useState(false);
+  const [visible2, setVisible2] = useState(false);
+
 
   useEffect(() => {
     props.fetchUserDetails();
-
   }, []);
 
   const handleSetEmail = (event) => {
@@ -28,11 +28,20 @@ function EditProfile(props) {
 
   const setEmailRequest = () => {
     props.setEmail(email);
-  }
+  };
 
   const handleSetPassword = (event) => {
     event.preventDefault();
+    setVisible2(true);
   };
+
+  const setPasswordRequest = () => {
+    props.setPassword({oldPassword: oldPassword, newPassword: newPassword});
+  };
+
+  if (!props.auth.isLoggedIn) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -48,12 +57,14 @@ function EditProfile(props) {
         <Box
           component="form"
           id="my-email-form"
+          textAlign="center"
           onSubmit={handleSetEmail}
           sx={{ mt: 1 }}
         >
           <TextField
             margin="normal"
             required
+            fullWidth
             variant="standard"
             value={email}
             id="email"
@@ -63,54 +74,91 @@ function EditProfile(props) {
             autoFocus
             onChange={(event) => setEmail(event.target.value)}
           />
-                <ConfirmDialog
-        visible={visible}
-        onHide={() => setVisible(false)}
-        message="Czy na pewno chcesz zmienić adres email?"
-        header="Potwierdzenie"
-        icon="pi pi-question-circle"
-        acceptLabel="Tak"
-        rejectLabel="Nie"
-        accept={() => setEmailRequest()}
-      />
+          <ConfirmDialog
+            visible={visible}
+            onHide={() => setVisible(false)}
+            message="Czy na pewno chcesz zmienić adres email?"
+            header="Potwierdzenie"
+            icon="pi pi-question-circle"
+            acceptLabel="Tak"
+            rejectLabel="Nie"
+            accept={() => setEmailRequest()}
+          />
           <Button
+
             form="my-email-form"
             type="submit"
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Zaloguj
+            Zmień hasło
           </Button>
         </Box>
-        <Box component="form" onSubmit={handleSetPassword()} sx={{ mt: 1 }}>
+        <Box
+        textAlign="center"
+          component="form"
+          id="my-password-form"
+          onSubmit={handleSetPassword}
+          sx={{ mt: 1 }}
+        >
           <TextField
             margin="normal"
             required
-            id="name"
-            label="Nazwa"
-            name="name"
-            autoComplete="name"
+            fullWidth
+            id="old-password"
+            label="Stare hasło"
+            value={oldPassword}
+            onChange={(event) => setOldPassword(event.target.value)}
+            name="old-password"
+            autoComplete="old-password"
             autoFocus
+            type="password"
+            variant="standard"
           />
           <TextField
             margin="normal"
             required
-            id="name"
-            label="Nazwa"
-            name="name"
-            autoComplete="name"
+            fullWidth
+            id="new-password"
+            value={newPassword}
+            label="Nowe hasło"
+            name="new-password"
+            autoComplete="new-password"
+            onChange={(event) => setNewPassword(event.target.value)}
             autoFocus
+            type="password"
+            variant="standard"
           />
           <TextField
             margin="normal"
             required
-            id="name"
-            label="Nazwa"
-            name="name"
-            autoComplete="name"
+            fullWidth
+            value={newPasswordAgain}
+            id="new-password-again"
+            label="Potwierdź nowe hasło"
+            name="new-password-again"
+            autoComplete="new-password-again"
+            onChange={(event) => setNewPasswordAgain(event.target.value)}
             autoFocus
+            type="password"
+            variant="standard"
           />
-          <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
+          <ConfirmDialog
+            visible={visible2}
+            onHide={() => setVisible2(false)}
+            message="Czy na pewno chcesz zmienić hasło?"
+            header="Zmiana hasła"
+            icon="pi pi-question-circle"
+            acceptLabel="Tak"
+            rejectLabel="Nie"
+            accept={() => setPasswordRequest()}
+          />
+          <Button
+            form="my-password-form"
+            type="submit"
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
             Zaloguj
           </Button>
         </Box>
@@ -130,6 +178,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     user: state.user.user,
+    auth: state.auth,
   };
 };
 

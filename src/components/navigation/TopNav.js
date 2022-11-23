@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs, Tab, Grid, Typography, Box } from "@mui/material";
+import { Tabs, Tab, Grid, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { logout } from "../../store/actions/auth";
 import { connect } from "react-redux";

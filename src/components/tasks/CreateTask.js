@@ -42,7 +42,9 @@ function CreateTask(props) {
 
   return (
     <div>
-      <Button onClick={handleClickOpen("body")}>Stwórz zadanie</Button>
+      <Box textAlign="center">
+      <Button sx={{ my: 3 }} variant="contained" color="success" size="large" onClick={handleClickOpen("body")}>Stwórz nowe zadanie</Button>
+      </Box>
       <Dialog
         open={open}
         onClose={handleClose}
