@@ -12,14 +12,13 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { login} from "../../store/actions/auth";
-import { useNavigate, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 const theme = createTheme();
 
 function Login(props) {
-  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();

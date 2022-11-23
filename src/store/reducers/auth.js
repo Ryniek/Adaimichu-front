@@ -6,30 +6,36 @@ const initialState = user
   ? { isLoggedIn: true, user, error: null, success: null }
   : { isLoggedIn: false, user: null, error: null, success: null };
 
-  const reducer = (state = initialState, action) => {
-    switch (action.type) {
-        case actionTypes.LOGIN_SUCCESS:
-            return {
-                ...state,
-                isLoggedIn: true,
-                user: action.user
-            };
-        case actionTypes.LOGIN_FAIL:
-            return {
-                ...state,
-                isLoggedIn: false,
-                user: null,
-                error: action.error
-            };
-        case actionTypes.LOGOUT:
-            return {
-                ...state,
-                isLoggedIn: false,
-                user: null
-            };
-        default:
-            return state;
-    }
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case actionTypes.LOGIN_SUCCESS:
+      return {
+        ...state,
+        isLoggedIn: true,
+        user: action.user,
+      };
+    case actionTypes.LOGIN_FAIL:
+      return {
+        ...state,
+        isLoggedIn: false,
+        user: null,
+        error: action.error,
+      };
+    case actionTypes.LOGOUT:
+      return {
+        ...state,
+        isLoggedIn: false,
+        user: null,
+      };
+    case actionTypes.SET_PASSWORD:
+      return {
+        ...state,
+        isLoggedIn: false,
+        user: null,
+      };
+    default:
+      return state;
+  }
 };
 
 export default reducer;

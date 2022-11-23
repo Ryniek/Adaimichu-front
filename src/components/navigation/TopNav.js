@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs, Tab, Grid, Typography, Box } from "@mui/material";
+import { Tabs, Tab, Grid, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { logout } from "../../store/actions/auth";
 import { connect } from "react-redux";
@@ -21,6 +21,10 @@ function TopNav(props) {
     props.logout();
     navigate("/");
   };
+
+  const profileNavigateHandler = () => {
+    navigate("/profile")
+  }
 
   return (
     <Grid
@@ -54,7 +58,7 @@ function TopNav(props) {
                   Ustawienia
                 </Button>
                 <Menu {...bindMenu(popupState)}>
-                  <MenuItem onClick={popupState.close}>Profil</MenuItem>
+                  <MenuItem onClick={() => profileNavigateHandler()}>Profil</MenuItem>
                   <MenuItem onClick={() => logoutHandler()}>Wyloguj</MenuItem>
                 </Menu>
               </React.Fragment>
