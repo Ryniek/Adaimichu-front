@@ -13,12 +13,13 @@ import {
   FormControlLabel,
   Switch,
   Grid,
-  Box,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import dateFormatter from "../../features/converters/dateConverter";
 import FlagIcon from "@mui/icons-material/Flag";
 import { ConfirmDialog } from "primereact/confirmdialog";
+import CreateTask from "./CreateTask";
+import EditTask from "./EditTask";
 
 function OwnTasks(props) {
   const [loading, setLoading] = useState(true);
@@ -106,7 +107,7 @@ function OwnTasks(props) {
         </CardContent>
         {!task.started && !task.finished ? (
           <CardActions>
-            <Button>Edytuj</Button>
+            <EditTask taskId={task.id} name={task.name} comment={task.comment} daysToUse={task.daysToUse}></EditTask>
             <Button onClick={() => setTaskToDelete(task.id)} sx={{ color: "#d50000" }}>Usuń</Button>
             <ConfirmDialog
                 visible={taskToDelete}
@@ -132,6 +133,7 @@ function OwnTasks(props) {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xl">
         <CssBaseline />
+        <CreateTask></CreateTask>
         <Stack spacing={3}>{tasks}</Stack>
       </Container>
     </ThemeProvider>

@@ -70,10 +70,6 @@ function Login(props) {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Zapamiętaj mnie"
-            />
             <Button
               type="submit"
               fullWidth
