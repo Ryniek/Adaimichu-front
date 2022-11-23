@@ -60,19 +60,28 @@ const reducer = (state = initialState, action) => {
     case actionTypes.CREATE_TASK:
       return {
         ...state,
-        tasks: state.tasks.concat(action.newTask),
+        tasks: [action.newTask, ...state.tasks],
       };
-      case actionTypes.DRAW_TASK:
-        return {
-          ...state,
-          tasks: state.tasks.concat(action.drawnTask),
-        };
-        case actionTypes.FINISH_TASK:
-          const afterFinishTasks = state.tasks.filter((task) => task.id !== action.taskId);
-          return {
-            ...state,
-            tasks: afterFinishTasks,
-          };
+    case actionTypes.EDIT_TASK:
+      return {
+        ...state,
+        tasks: state.tasks.map((task) =>
+          task.id === action.taskId ? action.editedTask : task
+        ),
+      };
+    case actionTypes.DRAW_TASK:
+      return {
+        ...state,
+        tasks: state.tasks.concat(action.drawnTask),
+      };
+    case actionTypes.FINISH_TASK:
+      const afterFinishTasks = state.tasks.filter(
+        (task) => task.id !== action.taskId
+      );
+      return {
+        ...state,
+        tasks: afterFinishTasks,
+      };
     default:
       return state;
   }

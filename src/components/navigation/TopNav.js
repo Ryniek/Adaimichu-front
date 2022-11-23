@@ -31,6 +31,7 @@ function TopNav(props) {
       style={{ minHeight: "8vh" }}
     >
       <Grid item xs={12} sm={8} align={{xs:"center", sm:"flex-start"}}>
+        <Link to="/owned">
         <Box
           component="img"
           sx={{
@@ -42,6 +43,7 @@ function TopNav(props) {
           alt="App logo"
           src={"./ada-i-michu-logo.png"}
         />
+        </Link>
       </Grid>
       <Grid item xs={12} sm={4} align="center">
         {props.auth.isLoggedIn ? (

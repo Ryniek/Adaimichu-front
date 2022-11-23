@@ -63,6 +63,17 @@ export const createTask = (task) => (dispatch) => {
     })
 };
 
+export const editTask = (taskId, task) => (dispatch) => {
+    axios.put('/tasks/' + taskId, task, {headers: authHeader() })
+    .then((response) => {
+        dispatch({
+            type: actionTypes.EDIT_TASK,
+            editedTask: response.data,
+            taskId: taskId
+        });
+    })
+};
+
 export const drawTask = () => (dispatch) => {
     axios.post('/tasks/draw', {}, {headers: authHeader() })
     .then((response) => {

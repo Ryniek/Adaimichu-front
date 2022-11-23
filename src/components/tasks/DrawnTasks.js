@@ -16,11 +16,11 @@ import {
   Typography,
   CardActions,
   Button,
-  FormControlLabel,
   Grid,
-  Box,
 } from "@mui/material";
 import { ConfirmDialog } from "primereact/confirmdialog";
+import { formatRelative, subDays } from 'date-fns'
+import { pl } from 'date-fns/locale'
 
 function DrawnTasks(props) {
   const [loading, setLoading] = useState(true);
@@ -58,11 +58,9 @@ function DrawnTasks(props) {
             ) : null}
           </Typography>
           <Grid container justify="center" sx={{ ml: { sm: 3 } }} spacing={2}>
-            <Grid item lg={3} sm={12} md={6} xs={12}>
+            <Grid item xs={12}>
               <Typography sx={{ fontSize: 16 }}>
-                <b>Data wygaśnięcia:</b> {dateFormatter(task.expirationDate)} (
-                {new Date(task.expirationDate).getDate() - new Date().getDate()}{" "}
-                dni)
+                <b>Data wygaśnięcia:</b> {dateFormatter(task.expirationDate)} ({formatRelative(new Date(task.expirationDate), new Date(), { locale: pl })})
               </Typography>
             </Grid>
           </Grid>
