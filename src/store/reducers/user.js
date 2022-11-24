@@ -5,7 +5,7 @@ const initialState = {
     user: {
         id: null,
         name: null,
-        email: null
+        email: ""
     }
 }
 
@@ -23,7 +23,7 @@ const reducer = (state = initialState, action) => {
           user: action.user,
         };
         case actionTypes.SET_EMAIL_FAIL:
-          toast.error(action.error);
+          toast.error(action.error[0].message);
           return {
             ...state,
           };

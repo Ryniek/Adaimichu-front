@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Button from "@mui/material/Button";
-import { Box, TextField } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 import { setEmail, fetchUserDetails } from "../../store/actions/user";
 import { setPassword } from "../../store/actions/auth";
 import { CssBaseline, Container } from "@mui/material";
 import { ConfirmDialog } from "primereact/confirmdialog";
-import { Navigate } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function EditProfile(props) {
   const [email, setEmail] = useState(props.user.email);
@@ -15,11 +16,21 @@ function EditProfile(props) {
   const [newPasswordAgain, setNewPasswordAgain] = useState("");
   const [visible, setVisible] = useState(false);
   const [visible2, setVisible2] = useState(false);
-
+  const [errorPasswordMessage, setErrorPasswordMessage] = useState("");
 
   useEffect(() => {
     props.fetchUserDetails();
   }, []);
+
+  useEffect(() => {
+    if (newPassword.length < 8) {
+      setErrorPasswordMessage("Minimalna długość hasła to 8 znaków");
+    } else if (newPassword !== newPasswordAgain) {
+      setErrorPasswordMessage("Hasła nie są identyczne");
+    } else {
+      setErrorPasswordMessage("");
+    }
+  }, [newPassword, newPasswordAgain]);
 
   const handleSetEmail = (event) => {
     event.preventDefault();
@@ -32,11 +43,15 @@ function EditProfile(props) {
 
   const handleSetPassword = (event) => {
     event.preventDefault();
-    setVisible2(true);
+    if (newPassword !== newPasswordAgain) {
+      toast.error("Hasła nie są identyczne.");
+    } else {
+      setVisible2(true);
+    }
   };
 
   const setPasswordRequest = () => {
-    props.setPassword({oldPassword: oldPassword, newPassword: newPassword});
+    props.setPassword({ oldPassword: oldPassword, newPassword: newPassword });
   };
 
   if (!props.auth.isLoggedIn) {
@@ -55,6 +70,7 @@ function EditProfile(props) {
         }}
       >
         <Box
+          noValidate
           component="form"
           id="my-email-form"
           textAlign="center"
@@ -63,7 +79,6 @@ function EditProfile(props) {
         >
           <TextField
             margin="normal"
-            required
             fullWidth
             variant="standard"
             value={email}
@@ -85,17 +100,17 @@ function EditProfile(props) {
             accept={() => setEmailRequest()}
           />
           <Button
-
             form="my-email-form"
             type="submit"
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Zmień hasło
+            Zmień email
           </Button>
         </Box>
         <Box
-        textAlign="center"
+          noValidate
+          textAlign="center"
           component="form"
           id="my-password-form"
           onSubmit={handleSetPassword}
@@ -103,7 +118,6 @@ function EditProfile(props) {
         >
           <TextField
             margin="normal"
-            required
             fullWidth
             id="old-password"
             label="Stare hasło"
@@ -117,7 +131,6 @@ function EditProfile(props) {
           />
           <TextField
             margin="normal"
-            required
             fullWidth
             id="new-password"
             value={newPassword}
@@ -131,7 +144,6 @@ function EditProfile(props) {
           />
           <TextField
             margin="normal"
-            required
             fullWidth
             value={newPasswordAgain}
             id="new-password-again"
@@ -143,6 +155,7 @@ function EditProfile(props) {
             type="password"
             variant="standard"
           />
+          <Typography color="error">{errorPasswordMessage}</Typography>
           <ConfirmDialog
             visible={visible2}
             onHide={() => setVisible2(false)}
@@ -159,7 +172,7 @@ function EditProfile(props) {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Zaloguj
+            Zmień hasło
           </Button>
         </Box>
       </Box>

@@ -60,6 +60,7 @@ function EditTask(props) {
           Edytuj zadanie
         </DialogTitle>
         <Box
+        noValidate
           id="my-editing-form"
           component="form"
           sx={{ mt: 1, pl: 4, pr: 4 }}
@@ -68,7 +69,6 @@ function EditTask(props) {
           <TextField
             margin="normal"
             value={name}
-            required
             fullWidth
             id="name"
             label="Nazwa"

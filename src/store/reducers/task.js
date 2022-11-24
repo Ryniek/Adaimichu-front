@@ -69,8 +69,7 @@ const reducer = (state = initialState, action) => {
         tasks: [action.newTask, ...state.tasks],
       };
     case actionTypes.CREATE_TASK_FAIL:
-      console.log(action.error);
-      toast.error(action.error);
+      toast.error(action.error[0].message);
       return {
         ...state,
       };
@@ -83,7 +82,7 @@ const reducer = (state = initialState, action) => {
         ),
       };
     case actionTypes.EDIT_TASK_FAIL:
-      toast.error(action.error);
+      toast.error(action.error[0].message);
       return {
         ...state,
       };
@@ -96,7 +95,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.DRAW_TASK_FAIL:
       toast.error(
         "Kolejne losowanie dostępne: " +
-          formatRelative(new Date(action.error), new Date(), { locale: pl })
+          formatRelative(new Date(action.error[0].message), new Date(), { locale: pl })
       );
       return {
         ...state,
