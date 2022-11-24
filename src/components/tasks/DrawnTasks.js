@@ -11,6 +11,7 @@ import Container from "@mui/material/Container";
 import {
   CssBaseline,
   Stack,
+  Box,
   Card,
   CardContent,
   Typography,
@@ -19,8 +20,8 @@ import {
   Grid,
 } from "@mui/material";
 import { ConfirmDialog } from "primereact/confirmdialog";
-import { formatRelative} from 'date-fns'
-import { pl } from 'date-fns/locale'
+import { formatRelative } from "date-fns";
+import { pl } from "date-fns/locale";
 
 function DrawnTasks(props) {
   const [loading, setLoading] = useState(true);
@@ -60,7 +61,11 @@ function DrawnTasks(props) {
           <Grid container justify="center" sx={{ ml: { sm: 3 } }} spacing={2}>
             <Grid item xs={12}>
               <Typography sx={{ fontSize: 16 }}>
-                <b>Data wygaśnięcia:</b> {dateFormatter(task.expirationDate)} ({formatRelative(new Date(task.expirationDate), new Date(), { locale: pl })})
+                <b>Data wygaśnięcia:</b> {dateFormatter(task.expirationDate)} (
+                {formatRelative(new Date(task.expirationDate), new Date(), {
+                  locale: pl,
+                })}
+                )
               </Typography>
             </Grid>
           </Grid>
@@ -110,6 +115,17 @@ function DrawnTasks(props) {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xl">
         <CssBaseline />
+        <Box textAlign="center">
+          <Button
+            onClick={() => setVisible(true)}
+            sx={{ my: 3 }}
+            variant="contained"
+            color="secondary"
+            size="large"
+          >
+            Wylosuj nowe zadanie
+          </Button>
+        </Box>
         <Stack spacing={3}>{tasks}</Stack>
       </Container>
       <ConfirmDialog

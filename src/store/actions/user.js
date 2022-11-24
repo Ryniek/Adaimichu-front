@@ -22,4 +22,10 @@ export const setEmail = (newEmail) => (dispatch) => {
             user: response.data,
         });
     })
+    .catch((error) => {
+        return dispatch({
+            type: actionTypes.SET_EMAIL_FAIL,
+            error: error.response.data
+        });
+    });
 };
