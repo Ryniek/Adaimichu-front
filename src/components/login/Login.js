@@ -23,7 +23,7 @@ function Login(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    props.login(data.get('name'), data.get('password'));
+    props.login(data.get('name'), data.get('password'))
   };
 
   if (props.auth.isLoggedIn) {

@@ -61,6 +61,12 @@ export const createTask = (task) => (dispatch) => {
             newTask: response.data
         });
     })
+    .catch((error) => {
+        return dispatch({
+            type: actionTypes.CREATE_TASK_FAIL,
+            error: error.response.data[0].message
+        });
+    });
 };
 
 export const editTask = (taskId, task) => (dispatch) => {
@@ -72,6 +78,12 @@ export const editTask = (taskId, task) => (dispatch) => {
             taskId: taskId
         });
     })
+    .catch((error) => {
+        return dispatch({
+            type: actionTypes.EDIT_TASK_FAIL,
+            error: error.response.data[0].message
+        });
+    });
 };
 
 export const drawTask = () => (dispatch) => {
@@ -82,6 +94,12 @@ export const drawTask = () => (dispatch) => {
             drawnTask: response.data
         });
     })
+    .catch((error) => {
+        return dispatch({
+            type: actionTypes.DRAW_TASK_FAIL,
+            error: error.response.data
+        });
+    });
 };
 
 export const finishTask = (taskId) => (dispatch) => {
