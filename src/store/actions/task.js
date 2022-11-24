@@ -82,6 +82,12 @@ export const drawTask = () => (dispatch) => {
             drawnTask: response.data
         });
     })
+    .catch((error) => {
+        return dispatch({
+            type: actionTypes.DRAW_TASK_FAIL,
+            error: error.response.data
+        });
+    });
 };
 
 export const finishTask = (taskId) => (dispatch) => {

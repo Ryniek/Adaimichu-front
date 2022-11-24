@@ -12,6 +12,7 @@ export const DELETE_TASK = "DELETE_TASK";
 export const CREATE_TASK = "CREATE_TASK";
 export const EDIT_TASK = "EDIT_TASK";
 export const DRAW_TASK = "DRAW_TASK";
+export const DRAW_TASK_FAIL = "DRAW_TASK_FAIL";
 export const FINISH_TASK = "FINISH_TASK";
 //USER
 export const FETCH_USER_DETAILS = "FETCH_USER_DETAILS";

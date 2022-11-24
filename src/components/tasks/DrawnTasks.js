@@ -19,7 +19,7 @@ import {
   Grid,
 } from "@mui/material";
 import { ConfirmDialog } from "primereact/confirmdialog";
-import { formatRelative, subDays } from 'date-fns'
+import { formatRelative} from 'date-fns'
 import { pl } from 'date-fns/locale'
 
 function DrawnTasks(props) {
@@ -122,7 +122,6 @@ function DrawnTasks(props) {
         rejectLabel="Nie"
         accept={() => drawNewTask()}
       />
-      <Button onClick={() => setVisible(true)}>Wylosuj nowe zadanie</Button>
     </ThemeProvider>
   );
 }

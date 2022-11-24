@@ -23,6 +23,8 @@ import FinishedTasks from "./components/tasks/FinishedTasks";
 import OwnTasks from "./components/tasks/OwnTasks";
 import TopNav from "./components/navigation/TopNav";
 import EditProfile from "./components/profile/EditProfile";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -37,6 +39,7 @@ root.render(
           <Route path="/finished" element={<FinishedTasks />}></Route>
           <Route path="/profile" element={<EditProfile />}></Route>
         </Routes>
+        <ToastContainer autoClose={2500}/>
       </BrowserRouter>
     </React.StrictMode>
   </Provider>
