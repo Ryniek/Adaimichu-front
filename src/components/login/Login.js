@@ -1,10 +1,8 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -48,10 +46,9 @@ function Login(props) {
           <Typography component="h1" variant="h5">
             Zaloguj się
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+          <Box noValidate component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
               margin="normal"
-              required
               fullWidth
               id="name"
               label="Nazwa"
@@ -61,7 +58,6 @@ function Login(props) {
             />
             <TextField
               margin="normal"
-              required
               fullWidth
               name="password"
               label="Hasło"

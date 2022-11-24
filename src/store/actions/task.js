@@ -64,7 +64,7 @@ export const createTask = (task) => (dispatch) => {
     .catch((error) => {
         return dispatch({
             type: actionTypes.CREATE_TASK_FAIL,
-            error: error.response.data[0].message
+            error: error.response.data
         });
     });
 };
@@ -81,7 +81,7 @@ export const editTask = (taskId, task) => (dispatch) => {
     .catch((error) => {
         return dispatch({
             type: actionTypes.EDIT_TASK_FAIL,
-            error: error.response.data[0].message
+            error: error.response.data
         });
     });
 };

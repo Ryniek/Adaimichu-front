@@ -3,6 +3,7 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT = "LOGOUT";
 export const SET_PASSWORD = "SET_PASSWORD";
+export const SET_PASSWORD_FAIL = "SET_PASSWORD_FAIL";
 //TASKS
 export const FETCH_OWNED_TASKS = "FETCH_OWNED_TASKS";
 export const FETCH_DRAWN_TASKS = "FETCH_DRAWN_TASKS";

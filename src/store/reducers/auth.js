@@ -1,5 +1,5 @@
 import * as actionTypes from "../actions/actionTypes";
-import { toast} from 'react-toastify';
+import { toast } from "react-toastify";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
@@ -37,6 +37,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         isLoggedIn: false,
         user: null,
+      };
+    case actionTypes.SET_PASSWORD_FAIL:
+      toast.error(action.error[0].message);
+      return {
+        ...state,
       };
     default:
       return state;

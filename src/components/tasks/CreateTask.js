@@ -56,14 +56,14 @@ function CreateTask(props) {
           Utwórz zadanie
         </DialogTitle>
         <Box
-            id='my-form'
+          id='my-form'
+          noValidate
           component="form"
           sx={{ mt: 1, pl: 4, pr: 4 }}
           onSubmit={handleSubmit}
         >
           <TextField
             margin="normal"
-            required
             fullWidth
             id="name"
             label="Nazwa"

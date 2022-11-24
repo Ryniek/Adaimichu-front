@@ -10,7 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 
 function TopNav(props) {
-  const [value, setValue] = React.useState("one");
+  const [value, setValue] = React.useState(window.location.href.substring(window.location.href.lastIndexOf('/') + 1));
   const navigate = useNavigate();
 
   const handleChange = (event, newValue) => {
@@ -83,19 +83,19 @@ function TopNav(props) {
             aria-label="secondary tabs example"
           >
             <Tab
-              value="one"
+              value="owned"
               label="Własne zadania"
               component={Link}
               to="/owned"
             />
             <Tab
-              value="two"
+              value="drawn"
               label="Wylosowane zadania"
               component={Link}
               to="/drawn"
             />
             <Tab
-              value="three"
+              value="finished"
               label="Zakończone zadania"
               component={Link}
               to="/finished"
