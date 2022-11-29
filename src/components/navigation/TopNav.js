@@ -35,7 +35,7 @@ function TopNav(props) {
       style={{ minHeight: "8vh" }}
     >
       <Grid item xs={12} sm={8} align={{xs:"center", sm:"flex-start"}}>
-        <Link to="/owned">
+        <Link to="/">
         <Box
           component="img"
           sx={{
