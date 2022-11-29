@@ -26,6 +26,8 @@ import EditProfile from "./components/profile/EditProfile";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import ResetPassword from "./components/login/ResetPassword";
+import SetPassword from "./components/login/SetPassword";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -40,6 +42,7 @@ root.render(
           <Route path="/finished" element={<FinishedTasks />}></Route>
           <Route path="/profile" element={<EditProfile />}></Route>
           <Route path="/remind" element={<ResetPassword />}></Route>
+          <Route path="/reset" element={<SetPassword />}></Route>
         </Routes>
         <ToastContainer autoClose={2500}/>
       </BrowserRouter>
