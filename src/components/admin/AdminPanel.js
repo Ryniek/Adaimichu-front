@@ -1,20 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import { Link } from "react-router-dom";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { connect } from "react-redux";
-import { login } from "../../store/actions/auth";
-import { Navigate } from "react-router-dom";
-import { fetchFinishedTasks } from "../../store/actions/task";
-import { deleteFinishedTask } from "../../store/actions/admin";
 import authHeader from "../../services/auth-header";
 import axios from "../../axios-instance";
 import { toast } from "react-toastify";
@@ -22,7 +12,7 @@ import { ConfirmDialog } from "primereact/confirmdialog";
 import { formatDuration, intervalToDuration } from "date-fns";
 import { pl } from "date-fns/locale";
 
-function AdminPanel(props) {
+function AdminPanel() {
   const [minutesBetweenDrawing, setMinutesBetweenDrawing] = useState();
   const [resetPasswordTokenValidity, setResetPasswordTokenValidity] =
     useState();
