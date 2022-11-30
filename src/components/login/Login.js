@@ -24,8 +24,13 @@ function Login(props) {
     props.login(data.get('name'), data.get('password'))
   };
 
-  if (props.auth.isLoggedIn) {
-    return <Navigate to="/owned" />;
+  if(props.auth.isLoggedIn) {
+    if (props.auth.user.roles.includes("ROLE_USER")) {
+      return <Navigate to="/owned" />;
+    } 
+    if (props.auth.user.roles.includes("ROLE_ADMIN")) {
+      return <Navigate to="/finished" />;
+    }
   }
 
   return (

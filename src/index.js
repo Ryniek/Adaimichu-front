@@ -8,26 +8,25 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import "primereact/resources/themes/lara-light-indigo/theme.css";  //theme
-import "primereact/resources/primereact.min.css";                  //core css
+import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
+import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css";
 import store from "./store/store";
 import { Provider } from "react-redux";
-import {
-  Route,
-  BrowserRouter,
-  Routes,
-} from "react-router-dom";
+import { Route, BrowserRouter, Routes } from "react-router-dom";
 import DrawnTasks from "./components/tasks/DrawnTasks";
 import FinishedTasks from "./components/tasks/FinishedTasks";
 import OwnTasks from "./components/tasks/OwnTasks";
 import TopNav from "./components/navigation/TopNav";
 import EditProfile from "./components/profile/EditProfile";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 import ResetPassword from "./components/login/ResetPassword";
 import SetPassword from "./components/login/SetPassword";
-
+import AdminPanel from "./components/admin/AdminPanel";
+import TabsAdmin from "./components/navigation/TabsAdmin";
+import TabsUser from "./components/navigation/TabsUser";
+import PrivateRoute from "./features/routing/PrivateRoute";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -35,6 +34,12 @@ root.render(
     <React.StrictMode>
       <BrowserRouter>
         <TopNav></TopNav>
+        <PrivateRoute roleAdmin>
+          <TabsAdmin></TabsAdmin>
+        </PrivateRoute>
+        <PrivateRoute roleUser>
+          <TabsUser></TabsUser>
+        </PrivateRoute>
         <Routes>
           <Route path="/" element={<Login />}></Route>
           <Route path="/owned" element={<OwnTasks />}></Route>
@@ -43,8 +48,9 @@ root.render(
           <Route path="/profile" element={<EditProfile />}></Route>
           <Route path="/remind" element={<ResetPassword />}></Route>
           <Route path="/reset" element={<SetPassword />}></Route>
+          <Route path="/admin/settings" element={<AdminPanel />}></Route>
         </Routes>
-        <ToastContainer autoClose={2500}/>
+        <ToastContainer autoClose={2500} />
       </BrowserRouter>
     </React.StrictMode>
   </Provider>

@@ -10,12 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 
 function TopNav(props) {
-  const [value, setValue] = React.useState(window.location.href.substring(window.location.href.lastIndexOf('/') + 1));
   const navigate = useNavigate();
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   const logoutHandler = () => {
     props.logout();
@@ -66,43 +61,6 @@ function TopNav(props) {
           </PopupState>
         ) : null}
       </Grid>
-
-      {props.auth.isLoggedIn ? (
-        <Grid item xs={12} align="center">
-          <Tabs
-            sx={{
-              "& .MuiTabs-flexContainer": {
-                flexWrap: "wrap",
-              },
-            }}
-            centered
-            value={value}
-            onChange={handleChange}
-            textColor="secondary"
-            indicatorColor="secondary"
-            aria-label="secondary tabs example"
-          >
-            <Tab
-              value="owned"
-              label="Własne zadania"
-              component={Link}
-              to="/owned"
-            />
-            <Tab
-              value="drawn"
-              label="Wylosowane zadania"
-              component={Link}
-              to="/drawn"
-            />
-            <Tab
-              value="finished"
-              label="Zakończone zadania"
-              component={Link}
-              to="/finished"
-            />
-          </Tabs>
-        </Grid>
-      ) : null}
     </Grid>
   );
 }

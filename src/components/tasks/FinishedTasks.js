@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchFinishedTasks } from "../../store/actions/task";
+import { deleteFinishedTask } from "../../store/actions/admin";
 import dateFormatter from "../../features/converters/dateConverter";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Container from "@mui/material/Container";
@@ -9,20 +10,28 @@ import {
   Stack,
   Card,
   CardContent,
+  Button,
+  CardActions,
   Typography,
   Grid,
 } from "@mui/material";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import { ConfirmDialog } from "primereact/confirmdialog";
 
 function FinishedTasks(props) {
   const [loading, setLoading] = useState(true);
+  const [taskToDelete, setTaskToDelete] = useState(false);
 
   useEffect(() => {
     props.fetchFinishedTasks();
 
     setLoading(false);
   }, []);
+
+  function deleteTask() {
+    props.deleteFinishedTask(taskToDelete);
+  }
 
   const theme = createTheme();
   let tasks = <p>Loading...</p>;
@@ -51,7 +60,7 @@ function FinishedTasks(props) {
               </>
             ) : null}
           </Typography>
-          <Grid container justify="center" sx={{ ml: {sm: 3} }} spacing={2}>
+          <Grid container justify="center" sx={{ ml: { sm: 3 } }} spacing={2}>
             <Grid item lg={3} sm={12} md={6} xs={12}>
               <Typography sx={{ fontSize: 16 }}>
                 <b>Data utworzenia:</b> {dateFormatter(task.creationDate)}
@@ -65,7 +74,7 @@ function FinishedTasks(props) {
               ) : null}
             </Grid>
           </Grid>
-          <Grid container justify="center" sx={{ ml: {sm: 3} }} spacing={2}>
+          <Grid container justify="center" sx={{ ml: { sm: 3 } }} spacing={2}>
             <Grid item lg={3} sm={12} md={6} xs={12}>
               {task.expirationDate ? (
                 <Typography sx={{ fontSize: 16 }}>
@@ -79,10 +88,10 @@ function FinishedTasks(props) {
               </Typography>
             </Grid>
           </Grid>
-          <Grid container justify="center" sx={{ ml: {sm: 3} }} spacing={2}>
+          <Grid container justify="center" sx={{ ml: { sm: 3 } }} spacing={2}>
             <Grid item lg={3} sm={12} md={6} xs={12}>
               {task.drawnUser ? (
-                <Typography sx={{ fontSize: 16, color:"DarkGreen" }}>
+                <Typography sx={{ fontSize: 16, color: "DarkGreen" }}>
                   <b>Wylosowana przez:</b> {task.drawnUser.name}
                 </Typography>
               ) : null}
@@ -94,6 +103,26 @@ function FinishedTasks(props) {
             </Grid>
           </Grid>
         </CardContent>
+        {props.auth.user.roles.includes("ROLE_ADMIN") ? (
+          <CardActions>
+            <Button
+              onClick={() => setTaskToDelete(task.id)}
+              sx={{ color: "#d50000" }}
+            >
+              Usuń
+            </Button>
+            <ConfirmDialog
+              visible={taskToDelete}
+              onHide={() => setTaskToDelete(false)}
+              message="Czy na pewno chcesz usunąć zadanie?"
+              header="Potwierdzenie"
+              icon="pi pi-exclamation-circle"
+              acceptLabel="Tak"
+              rejectLabel="Nie"
+              accept={() => deleteTask()}
+            />
+          </CardActions>
+        ) : null}
       </Card>
     ));
   }
@@ -111,11 +140,13 @@ function FinishedTasks(props) {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchFinishedTasks: () => dispatch(fetchFinishedTasks()),
+    deleteFinishedTask: (id) => dispatch(deleteFinishedTask(id)),
   };
 };
 
 const mapStateToProps = (state) => {
   return {
+    auth: state.auth,
     tasks: state.task.tasks,
   };
 };
